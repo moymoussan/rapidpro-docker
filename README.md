@@ -1,5 +1,6 @@
 # 🐳 RapidPro Docker
 
+[![tag](https://img.shields.io/github/tag/nyaruka/rapidpro-docker.svg)](https://github.com/nyaruka/rapidpro-docker/releases)
 [![Build Status](https://github.com/nyaruka/rapidpro-docker/workflows/CI/badge.svg)](https://github.com/nyaruka/rapidpro-docker/actions?query=workflow%3ACI)
 
 Docker compose for the latest stable release of RapidPro from Nyaruka (9.2.x).
