@@ -1,1 +1,8 @@
-pending
+[build]
+builder = "Docker"
+
+[deploy]
+region = "us-west2"
+numReplicas = 1
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
