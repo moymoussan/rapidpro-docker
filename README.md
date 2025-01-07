@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/nyaruka/rapidpro-docker/workflows/CI/badge.svg)](https://github.com/nyaruka/rapidpro-docker/actions?query=workflow%3ACI)
 
-Docker compose for the latest stable release of RapidPro from Nyaruka (9.2.x).
+Docker compose for stable release versions of RapidPro.
 
 Includes:
  - RapidPro webapp and celery worker ([License](https://github.com/nyaruka/rapidpro/blob/main/LICENSE))
@@ -13,9 +13,10 @@ Includes:
  - PostgreSQL (postgis)
  - Elasticsearch
  - Redis
+ - DynamoDB local
  - Minio (S3 emulator)
 
-These example containers are for development purposes only and are not suitable for production deployments.
+These example containers are for development purposes only and are *not intended for production deployments*.
 
 ## Usage
 
