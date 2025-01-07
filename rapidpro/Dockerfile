@@ -1,4 +1,4 @@
-FROM python:3.11-bullseye
+FROM python:3.12-bullseye
 
 ARG RAPIDPRO_TAG
 ENV RAPIDPRO_TAG=${RAPIDPRO_TAG:-main}
@@ -12,7 +12,7 @@ RUN npm install -g yarn less
 
 WORKDIR /rapidpro 
 RUN wget -O rapidpro.tar.gz "https://github.com/nyaruka/rapidpro/archive/${RAPIDPRO_TAG}.tar.gz" && tar -xf rapidpro.tar.gz --strip-components=1 && rm rapidpro.tar.gz
-RUN poetry install
+RUN poetry install --no-root
 RUN yarn install
 RUN ln -s /rapidpro/temba/settings.py.dev /rapidpro/temba/settings.py
 
