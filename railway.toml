@@ -1,0 +1,24 @@
+# railway.toml
+
+[build]
+# Use the Docker build runner
+builder = "Docker"
+
+# Pass build arguments to Docker (optional if you need to override any ARG in your Dockerfile)
+  [build.args]
+  RAPIDPRO_TAG = "v9.2.5"
+
+[deploy]
+# Command Railway will use to start your app/container. 
+# If you rely on the default CMD from the Dockerfile, remove this.
+startCommand = "webapp"
+
+[plugins.docker]
+# Path to your Dockerfile (adjust if yours is in a subdirectory)
+dockerfile = "./Dockerfile"
+
+# Directory used as build context
+context = "."
+
+# Name of the service in the Railway project (shows in the dashboard)
+serviceName = "rapidpro"
