@@ -37,15 +37,15 @@ services:
       interval: 10s
       timeout: 5s
 
-  redis:
-    image: redis:6.2-alpine
-    command: redis-server --save 60 1 --loglevel warning
+  valkey:
+    image: valkey/valkey:8.0-alpine
+    command: valkey-server --save 60 1 --loglevel warning
     volumes:
-      - redis:/data
+      - valkey:/data
     ports:
       - 6379:6379
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ["CMD", "valkey-cli", "ping"]
       interval: 5s
       timeout: 2s
 
@@ -88,7 +88,7 @@ services:
         condition: service_healthy
       elastic:
         condition: service_healthy
-      redis:
+      valkey:
         condition: service_healthy
       dynamo:
         condition: service_healthy
@@ -132,7 +132,7 @@ services:
     environment:
       MAILROOM_ADDRESS: 0.0.0.0
       MAILROOM_DB: postgres://temba:temba@postgres:5432/temba?sslmode=disable
-      MAILROOM_REDIS: redis://redis:6379/15
+      MAILROOM_VALKEY: valkey://valkey:6379/15
       MAILROOM_ELASTIC: http://elastic:9200
       MAILROOM_DOMAIN: ${MAILROOM_DOMAIN:-host.docker.internal}
       MAILROOM_ATTACHMENT_DOMAIN: ${MAILROOM_ATTACHMENT_DOMAIN:-host.docker.internal}
@@ -162,7 +162,7 @@ services:
     environment:
       COURIER_ADDRESS: 0.0.0.0
       COURIER_DB: postgres://temba:temba@postgres:5432/temba?sslmode=disable
-      COURIER_REDIS: redis://redis:6379/15
+      COURIER_valkey: valkey://valkey:6379/15
       COURIER_DOMAIN: ${COURIER_DOMAIN:-host.docker.internal}
       COURIER_BASE_URL: ${COURIER_BASE_URL:-https://host.docker.internal}
       COURIER_DISALLOWED_NETWORKS: 6.6.6.6
@@ -194,7 +194,7 @@ volumes:
     driver: local
   elastic:
     driver: local
-  redis:
+  valkey:
     driver: local
   dynamo:
     driver: local
