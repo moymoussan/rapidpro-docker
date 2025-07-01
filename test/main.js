@@ -1,9 +1,9 @@
-const puppeteer = require('puppeteer');
+import { launch } from 'puppeteer';
 
 (async () => {
     console.log('Starting test...');
 
-    const browser = await puppeteer.launch({
+    const browser = await launch({
         headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
@@ -11,8 +11,8 @@ const puppeteer = require('puppeteer');
     try {
         const page = await browser.newPage();
 
-        console.log('Navigating to http://localhost:80/accounts/signup/...');
-        await page.goto('http://localhost:80/accounts/signup/', {
+        console.log('Navigating to http://localhost/accounts/signup/...');
+        await page.goto('http://localhost/accounts/signup/', {
             waitUntil: 'networkidle2',
             timeout: 30000
         });
