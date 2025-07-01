@@ -11,12 +11,6 @@ jobs:
       - name: Run docker compose
         run: docker compose up -d
 
-      - name: Wait for services to be ready
-        run: |
-          echo "Waiting for nginx to be ready..."
-          timeout 300 bash -c 'until curl -f http://localhost:80/accounts/signup/ >/dev/null 2>&1; do sleep 5; done'
-          echo "Services are ready!"
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
