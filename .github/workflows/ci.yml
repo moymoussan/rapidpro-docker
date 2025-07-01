@@ -11,9 +11,25 @@ jobs:
       - name: Run docker compose
         run: docker compose up -d
 
-      - name: Run test
-        uses: tj-actions/puppeteer@v5
-        id: puppeteer
+      - name: Wait for services to be ready
+        run: |
+          echo "Waiting for nginx to be ready..."
+          timeout 300 bash -c 'until curl -f http://localhost:80/accounts/signup/ >/dev/null 2>&1; do sleep 5; done'
+          echo "Services are ready!"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          files: |
-            test/main.js
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run test
+        run: node test/main.js
+
+      - name: Show logs on failure
+        if: failure()
+        run: |
+          echo "=== Docker compose logs ==="
+          docker compose logs --tail=50
