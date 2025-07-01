@@ -10,3 +10,10 @@ jobs:
 
       - name: Run docker compose
         run: docker compose up -d
+
+      - name: Run test
+        uses: tj-actions/puppeteer@v5
+        id: puppeteer
+        with:
+          files: |
+            test/main.js
