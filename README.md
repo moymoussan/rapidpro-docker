@@ -13,7 +13,7 @@ Includes:
  - nginx
  - PostgreSQL (postgis)
  - Elasticsearch
- - Redis
+ - Valkey
  - DynamoDB local
  - Minio (S3 emulator)
 
