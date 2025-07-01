@@ -8,7 +8,7 @@ services:
       - 80:80
 
   postgres:
-    image: ghcr.io/baosystems/postgis:15-3.3 # see https://github.com/postgis/docker-postgis/issues/216
+    image: postgres:15-alpine
     volumes:
       - ./postgres/init_dbs.sql:/docker-entrypoint-initdb.d/dev_dbs.sql
       - postgres:/var/lib/postgresql/data
@@ -81,7 +81,7 @@ services:
     build:
       context: ./rapidpro/
       args:
-        - RAPIDPRO_TAG=v10.0.1
+        - RAPIDPRO_TAG=v10.1.219
     command: ["webapp"]
     depends_on:
       postgres:
@@ -111,18 +111,19 @@ services:
     build:
       context: ./rapidpro/
       args:
-        - RAPIDPRO_TAG=v10.0.0
+        - RAPIDPRO_TAG=v10.1.219
     command: ["celery"]
     depends_on:
       rapidpro:
         condition: service_healthy
     environment:
       MAILROOM_URL: http://mailroom:8090
+      MAILROOM_AUTH_TOKEN: topsecret
 
   mailroom:
     image: nyaruka/mailroom:stable
     build: 
-      context: https://github.com/nyaruka/mailroom.git#v10.0.0
+      context: https://github.com/nyaruka/mailroom.git#v10.1.158
       dockerfile: Dockerfile
     depends_on:
       rapidpro:
@@ -152,7 +153,7 @@ services:
   courier:
     image: nyaruka/courier:stable
     build: 
-      context: https://github.com/nyaruka/courier.git#v10.0.0
+      context: https://github.com/nyaruka/courier.git#v10.1.35
       dockerfile: Dockerfile
     depends_on:
       rapidpro:
@@ -162,7 +163,7 @@ services:
     environment:
       COURIER_ADDRESS: 0.0.0.0
       COURIER_DB: postgres://temba:temba@postgres:5432/temba?sslmode=disable
-      COURIER_valkey: valkey://valkey:6379/15
+      COURIER_VALKEY: valkey://valkey:6379/15
       COURIER_DOMAIN: ${COURIER_DOMAIN:-host.docker.internal}
       COURIER_BASE_URL: ${COURIER_BASE_URL:-https://host.docker.internal}
       COURIER_DISALLOWED_NETWORKS: 6.6.6.6
@@ -179,7 +180,7 @@ services:
   indexer:
     image: nyaruka/indexer:stable
     build: 
-      context: https://github.com/nyaruka/rp-indexer.git#v10.0.0
+      context: https://github.com/nyaruka/rp-indexer.git#v10.1.1
       dockerfile: Dockerfile
     depends_on:
       rapidpro:

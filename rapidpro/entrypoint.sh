@@ -1,6 +1,7 @@
 #!/bin/sh
 
 export REMOTE_CONTAINERS=true
+export POSTGIS=off
 
 ACTION=${1:-webapp}
 
