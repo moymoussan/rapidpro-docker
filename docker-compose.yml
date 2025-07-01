@@ -111,7 +111,7 @@ services:
     build:
       context: ./rapidpro/
       args:
-        - RAPIDPRO_TAG=v10.1.219
+        - RAPIDPRO_TAG=v10.2.0
     command: ["celery"]
     depends_on:
       rapidpro:
@@ -123,7 +123,7 @@ services:
   mailroom:
     image: nyaruka/mailroom:stable
     build: 
-      context: https://github.com/nyaruka/mailroom.git#v10.1.158
+      context: https://github.com/nyaruka/mailroom.git#v10.2.0
       dockerfile: Dockerfile
     depends_on:
       rapidpro:
@@ -153,7 +153,7 @@ services:
   courier:
     image: nyaruka/courier:stable
     build: 
-      context: https://github.com/nyaruka/courier.git#v10.1.35
+      context: https://github.com/nyaruka/courier.git#v10.2.0
       dockerfile: Dockerfile
     depends_on:
       rapidpro:
@@ -180,7 +180,7 @@ services:
   indexer:
     image: nyaruka/indexer:stable
     build: 
-      context: https://github.com/nyaruka/rp-indexer.git#v10.1.1
+      context: https://github.com/nyaruka/rp-indexer.git#v10.2.0
       dockerfile: Dockerfile
     depends_on:
       rapidpro:
