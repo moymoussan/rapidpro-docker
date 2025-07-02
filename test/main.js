@@ -11,17 +11,9 @@ const puppeteer = require('puppeteer');
     try {
         const page = await browser.newPage();
 
-        console.log('Navigating to http://localhost:80/accounts/signup/...');
-        await page.goto('http://localhost:80/accounts/signup/', {
-            waitUntil: 'networkidle2',
-            timeout: 30000
-        });
+        await page.goto('http://localhost/accounts/signup/', { waitUntil: 'networkidle2', timeout: 30000 });
 
-        console.log('Page loaded successfully!');
-
-        // Check if the page has the expected content
-        const title = await page.title();
-        console.log('Page title:', title);
+        console.log('Signup page loaded successfully!');
 
         // Check if signup form elements are present
         const signupForm = await page.$('form');
@@ -72,12 +64,15 @@ const puppeteer = require('puppeteer');
         await fillField('#id_password1', testData.password, 'Password');
         await fillField('#id_workspace', testData.organization, 'Workspace');
 
-        console.log('Submitting signup form...');
         await clickButton('button[type="submit"]', 'Sign Up');
 
         await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 10000 });
 
-        console.log('✓ Signup form test completed successfully!');
+        console.log('Submitted signup form');
+
+        await page.goto('http://localhost/flow/', { waitUntil: 'networkidle2', timeout: 30000 });
+
+        console.log('Flow list page loaded successfully');
 
     } catch (error) {
         console.error('✗ Test failed:', error.message);
