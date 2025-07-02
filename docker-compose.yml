@@ -81,7 +81,7 @@ services:
     build:
       context: ./rapidpro/
       args:
-        - RAPIDPRO_TAG=v10.1.219
+        - RAPIDPRO_TAG=v10.2.1
     command: ["webapp"]
     depends_on:
       postgres:
