@@ -111,7 +111,7 @@ services:
     build:
       context: ./rapidpro/
       args:
-        - RAPIDPRO_TAG=v10.2.0
+        - RAPIDPRO_TAG=v10.2.1
     command: ["celery"]
     depends_on:
       rapidpro:
