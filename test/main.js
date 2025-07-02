@@ -31,6 +31,29 @@ const puppeteer = require('puppeteer');
             throw new Error('Signup form not found');
         }
 
+        // Helper function to fill form fields
+        const fillField = async (selector, value, fieldName) => {
+            const field = await page.$(selector);
+            if (field) {
+                await field.click({ clickCount: 3 }); // Clear any placeholder text
+                await field.type(value);
+                console.log(`✓ ${fieldName} field filled`);
+            } else {
+                throw new Error(`${fieldName} field not found`);
+            }
+        };
+
+        // Helper function to click buttons
+        const clickButton = async (selector, buttonName) => {
+            const button = await page.$(selector);
+            if (button) {
+                await button.click();
+                console.log(`✓ ${buttonName} button clicked`);
+            } else {
+                throw new Error(`${buttonName} button not found`);
+            }
+        };
+
         // Fill out the signup form
         console.log('Filling out signup form...');
 
@@ -43,56 +66,14 @@ const puppeteer = require('puppeteer');
         };
 
         // Fill out the signup form fields
-        const firstNameField = await page.$('#id_first_name');
-        if (firstNameField) {
-            await firstNameField.type(testData.firstName);
-            console.log('✓ First name field filled');
-        } else {
-            throw new Error('First name field not found');
-        }
-
-        const lastNameField = await page.$('#id_last_name');
-        if (lastNameField) {
-            await lastNameField.type(testData.lastName);
-            console.log('✓ Last name field filled');
-        } else {
-            throw new Error('Last name field not found');
-        }
-
-        const emailField = await page.$('#id_email');
-        if (emailField) {
-            await emailField.type(testData.email);
-            console.log('✓ Email field filled');
-        } else {
-            throw new Error('Email field not found');
-        }
-
-        const passwordField = await page.$('#id_password1');
-        if (passwordField) {
-            await passwordField.type(testData.password);
-            console.log('✓ Password field filled');
-        } else {
-            throw new Error('Password field not found');
-        }
-
-        const workspaceField = await page.$('#id_workspace');
-        if (workspaceField) {
-            await workspaceField.click({ clickCount: 3 });
-            await workspaceField.type(testData.organization);
-            console.log('✓ Workspace field filled');
-        } else {
-            throw new Error('Workspace field not found');
-        }
+        await fillField('#id_first_name', testData.firstName, 'First name');
+        await fillField('#id_last_name', testData.lastName, 'Last name');
+        await fillField('#id_email', testData.email, 'Email');
+        await fillField('#id_password1', testData.password, 'Password');
+        await fillField('#id_workspace', testData.organization, 'Workspace');
 
         console.log('Submitting signup form...');
-
-        const submitButton = await page.$('button[type="submit"]');
-        if (submitButton) {
-            await submitButton.click();
-            console.log('✓ Sign Up button clicked');
-        } else {
-            throw new Error('Sign Up button not found');
-        }
+        await clickButton('button[type="submit"]', 'Sign Up');
 
         await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 10000 });
 
